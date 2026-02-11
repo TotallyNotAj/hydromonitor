@@ -92,7 +92,7 @@ void MQTT_ConnectFunction( void ) {
   xReturned = xTaskCreatePinnedToCore(
                 MQTT_Connect,     /* Function that implements the task. */
                 "MQTT CONNECT",    /* Text name for the task. */
-                4096,                     /* Stack size (Bytes in ESP32, words in Vanilla FreeRTOS) */
+                8192,                     /* Stack size (Bytes in ESP32, words in Vanilla FreeRTOS) */
                 ( void * ) 1,             /* Parameter passed into the task. */
                 8,                        /* Priority at which the task is created. */
                 &xMQTT_Connect,    /* Used to pass out the created task's handle. */
@@ -192,6 +192,7 @@ void initialize(void){
   }
 
   Serial.println("\n\n***** Wi-Fi CONNECTED! *****\n\n");
+  vNTPFunction();
    
   initMQTT();          // INIT MQTT  
   vUpdateFunction();
@@ -245,7 +246,7 @@ void vButtonCheckFunction( void ) {
     xReturned = xTaskCreatePinnedToCore(
                     vButtonCheck,               // Function that implements the task. 
                     "vButtonCheck",    // Text name for the task. 
-                    4096,               // Stack size (Bytes in ESP32, words in Vanilla FreeRTOS) 
+                    8192,               // Stack size (Bytes in ESP32, words in Vanilla FreeRTOS) 
                     ( void * ) 1,       // Parameter passed into the task. 
                     3,                  // Priority at which the task is created. 
                     &xButtonCheckeHandle,        // Used to pass out the created task's handle. 

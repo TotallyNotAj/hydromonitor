@@ -43,7 +43,7 @@
 #define DATA_PIN 27
 
 // DEFINE THE CONTROL PINS FOR THE DHT22 
-#define DHTPIN 22
+#define DHTPIN 17
 #define DHTTYPE DHT22
 
 
