@@ -31,6 +31,14 @@ def get_all(start,end):
    
     if request.method == "GET":
         '''Add your code here to complete this route'''
+        try:
+            START = escape(start)
+            END = escape(end)
+            data = mongo.getAllInRange(START, END)
+            if data:
+                return jsonify({"status":"found","data": data})
+        except Exception as e:
+            print(f"get_data error: f{str(e)}")
 
     # FILE DATA NOT EXIST
     return jsonify({"status":"not found","data":[]})
@@ -43,6 +51,15 @@ def get_temperature_mmar(start,end):
    
     if request.method == "GET": 
         '''Add your code here to complete this route'''
+        try:
+            START = escape(start)
+            END = escape(end)
+            temperature_mmar = mongo.temperatureMMAR(START, END)
+            if temperature_mmar:
+                return jsonify({"status":"found","data": temperature_mmar})
+            
+        except Exception as e:
+            print(f"get_temperature_mmar error: f{str(e)}")
 
     # FILE DATA NOT EXIST
     return jsonify({"status":"not found","data":[]})
@@ -57,6 +74,15 @@ def get_humidity_mmar(start,end):
    
     if request.method == "GET": 
         '''Add your code here to complete this route'''
+        try:
+            START = escape(start)
+            END = escape(end)
+            humidity_mmar = mongo.humidityMMAR(START, END)
+            if humidity_mmar:
+                return jsonify({"status":"found","data": humidity_mmar})
+            
+        except Exception as e:
+            print(f"get_humiditiy_mmar error: f{str(e)}")
 
     # FILE DATA NOT EXIST
     return jsonify({"status":"not found","data":[]})
@@ -70,7 +96,17 @@ def get_freq_distro(variable,start,end):
     '''RETURNS FREQUENCY DISTRIBUTION FOR SPECIFIED VARIABLE'''
    
     if request.method == "GET": 
-        '''Add your code here to complete this route'''         
+        '''Add your code here to complete this route''' 
+        try:
+            VARIABLE = escape(variable)
+            START = escape(start)
+            END = escape(end)
+            frequency = mongo.frequencyDistro(VARIABLE, START, END)
+            if frequency:
+                return jsonify({"status":"found","data": frequency})
+            
+        except Exception as e:
+            print(f"get_frequency error: f{str(e)}")                 
 
     # FILE DATA NOT EXIST
     return jsonify({"status":"not found","data":[]})
@@ -83,6 +119,11 @@ def get_images(filename):
    
     if request.method == "GET":
         '''Add your code here to complete this route'''
+        directory   = join(getcwd(), Config.UPLOADS_FOLDER) 
+        filePath    = join(getcwd(), Config.UPLOADS_FOLDER, filename) 
+
+        if exists(filePath):        
+            return send_from_directory(directory, filename)
         
         # FILE DOES NOT EXIST
         return jsonify({"status":"file not found"}), 404

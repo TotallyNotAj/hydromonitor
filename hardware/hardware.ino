@@ -41,10 +41,9 @@
 #define NUM_LEDS 7
 
 #define DATA_PIN 27
-#define CLOCK_PIN 13 
 
 // DEFINE THE CONTROL PINS FOR THE DHT22 
-#define DHTPIN 26
+#define DHTPIN 22
 #define DHTTYPE DHT22
 
 
@@ -169,10 +168,10 @@ void vUpdate( void * pvParameters )  {
           // #######################################################
    
           // 1. Read Humidity and save in variable below
-          double h = 0;
+          double h = dht.readHumidity();
            
           // 2. Read temperature as Celsius   and save in variable below
-          double t = 0;    
+          double t = dht.readTemperature();    
  
 
           if(isNumber(t)){
